@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -31,51 +30,46 @@ public class Demo1Application {
         }
 
 
-        @GetMapping("products")
+        @GetMapping("/products")
         public List<ProductEnity> getProducts(){
-            List<ProductEnity> result=productService.getProducts();
-            return result;
+            return productService.getProducts();
         }
 
-        @GetMapping(value="products",params ="id")
-        public ProductEnity getProductById(@RequestParam Long id) throws Exception {
+        @GetMapping("/products/{id}")
+        public ProductEnity getProductById(@PathVariable Long id) {
             ProductEnity result=productService.getProductById(id);
             return result;
         }
 
-        @PostMapping("products")
-        public String saveProducts(@RequestBody ProductEnity newProductEntity){
+        @PostMapping("/products")
+        public String saveProduct(@RequestBody ProductEnity newProductEntity){
 
             Random random = new Random();
-            ProductEnity product=new ProductEnity();
             Long randomId=random.nextLong();
 
+            ProductEnity product=new ProductEnity();
             product.setPrice(newProductEntity.getPrice());
             product.setName(newProductEntity.getName());
             product.setId(randomId);
 
-            productService.saveProducts(product);
-            productRepository.save(product);
+            productService.saveProduct(product);
 
             return "성공";
         }
 
-        @GetMapping(value = "products",params="name")
+        @GetMapping(value = "/products",params="name")
         public List<ProductEnity> getProductByName(@RequestParam String name){
-            List<ProductEnity> result=productService.getProductByName(name);
-            return result;
+            return productService.getProductByName(name);
         }
 
-        @GetMapping(value = "products", params = {"name", "price"})
+        @GetMapping(value = "/products", params = {"name", "price"})
         public List<ProductEnity>getProductByNameAndPrice(@RequestParam String name, @RequestParam Long price){
-            List<ProductEnity> result=productService.getProductByNameAndPrice(name,price);
-            return result;
+            return productService.getProductByNameAndPrice(name, price);
         }
 
         @GetMapping("/productsOrderByPrice")
         public List<ProductEnity>getProductByNameOrderByPrice(@RequestParam String name){
-            List<ProductEnity> result=productService.getProductByNameOrderByPrice(name);
-            return result;
+            return productService.getProductByNameOrderByPrice(name);
         }
     }
 }

@@ -28,15 +28,15 @@ public class ProductEnity {
     public ProductEnity(){
     }
 
-    public Long getId(){
-        return id;
-    }
-    public String getName(){
-        return name;
-    }
-    public Long getPrice(){
-        return price;
-    }
+//    public Long getId(){
+//        return id;
+//    }
+//    public String getName(){
+//        return name;
+//    }
+//    public Long getPrice(){
+//        return price;
+//    }
 
 
 }
